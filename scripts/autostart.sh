@@ -4,10 +4,12 @@
 # Phase 2: Background services (compositor, notifications, polybar, tray apps)
 
 # ── Phase 1: Blocking ──────────────────────────────────────────────────────────
-# Disable DPMS and screen blanking (prevents GPU/display wake issues)
-xset s off
-xset s noblank
-xset -dpms
+# Display Power Management & Idle
+# 5 min (300s) until dim notifier, 30s cycle until slock (total 330s / 5.5m)
+xset s 300 30
+# Enable DPMS: turn display off after 8 min (480s)
+xset +dpms
+xset dpms 480 480 480
 
 # Export display env to systemd/dbus in parallel (both are IPC round-trips)
 if command -v systemctl >/dev/null 2>&1; then
@@ -56,5 +58,8 @@ nm-applet --sm-disable 2>/dev/null &
 
 # Launch Polybar
 "$HOME/.config/polybar/launch.sh" 2>/dev/null &
+
+# Session locker (xss-lock hooks X11 screensaver and systemd sleep to slock)
+pgrep -x xss-lock >/dev/null || xss-lock -- slock &
 
 dex -a 2>/dev/null

@@ -78,6 +78,9 @@ check_cmd "feh"
 check_cmd "flameshot"
 check_cmd "dex"
 check_cmd "amixer"
+check_cmd "slock"
+check_cmd "xss-lock"
+check_cmd "brightnessctl"
 echo ""
 
 # ── Terminal emulators ──────────────────────────────────

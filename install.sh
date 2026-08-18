@@ -38,7 +38,7 @@ info "Installing runtime dependencies..."
 install_packages rofi picom dunst feh flameshot dex mate-polkit alsa-utils git unzip xclip \
     xorg-xprop thunar gvfs tumbler thunar-archive-plugin nwg-look xdg-user-dirs \
     xdg-desktop-portal-gtk pipewire pavucontrol gnome-keyring networkmanager network-manager-applet \
-    libnotify rsync
+    libnotify rsync xss-lock brightnessctl slock
 ok "Runtime dependencies installed."
 
 # ── Qt / GTK theming ─────────────────────────────────────
