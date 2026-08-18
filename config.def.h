@@ -6,7 +6,7 @@ static const unsigned int refresh_rate = 60;    /* matches dwm's mouse event pro
 static const unsigned int enable_noborder = 1;  /* toggles noborder feature (0=disabled, 1=enabled) */
 static const int cursorwarp         = 1;        /* 1 means warp cursor to center of focused window/monitor */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 /* Window swallowing: when you launch a GUI app from a terminal, the terminal */
 /* hides and the GUI app takes its place. Set isterminal=1 in rules[] for your terminal. */
 static const int showbar            = 1;        /* 0 means no bar */

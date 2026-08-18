@@ -1,0 +1,10 @@
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export QT_QPA_PLATFORMTHEME=qt6ct
+
+# Tell systemd user session that X is running
+dbus-update-activation-environment --systemd DISPLAY XAUTHORITY
+systemctl --user import-environment DISPLAY XAUTHORITY
+systemctl --user start graphical-session.target
+systemctl --user start xdg-desktop-portal-gtk.service
+systemctl --user start xdg-desktop-portal

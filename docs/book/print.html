@@ -205,8 +205,8 @@
 <pre><code class="language-bash">sudo pacman -S polybar
 </code></pre>
 <h3 id="2-clone-and-build"><a class="header" href="#2-clone-and-build">2. Clone and Build</a></h3>
-<pre><code class="language-bash">git clone https://github.com/ChrisTitusTech/dwm-titus.git
-cd dwm-titus
+<pre><code class="language-bash">git clone https://github.com/ChrisTitusTech/dwm-sky.git
+cd dwm-sky
 cp config.def.h config.h
 make
 sudo make install
@@ -450,7 +450,7 @@ keys = [
 <p>See the comments in <code>hotkeys.toml</code> for a full list of <code>func</code> values and modifier syntax.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
-<p>dwm-titus uses two TOML config files that <strong>live-reload on save</strong> — no recompile needed for most changes.</p>
+<p>dwm-sky uses two TOML config files that <strong>live-reload on save</strong> — no recompile needed for most changes.</p>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -549,7 +549,7 @@ keys = [
     NULL /* terminate */
 };
 </code></pre>
-<p>Alternatively, place <code>.desktop</code> files in <code>~/.config/autostart/</code> — dwm-titus uses <code>dex</code> to process them.</p>
+<p>Alternatively, place <code>.desktop</code> files in <code>~/.config/autostart/</code> — dwm-sky uses <code>dex</code> to process them.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="theming"><a class="header" href="#theming">Theming</a></h1>
 <p>Themes are defined in <code>config/themes.toml</code>. Change the active theme and <strong>save</strong> — dwm, terminal, rofi, and polybar all update instantly. No restart needed.</p>
@@ -717,7 +717,7 @@ dark_mode       = true
 <p>The script auto-detects your terminal emulator (ghostty → alacritty → kitty → st → xterm) and uses the active rofi theme from <code>~/.config/rofi/themes/controlcenter.rasi</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="patches--features"><a class="header" href="#patches--features">Patches &amp; Features</a></h1>
-<p>dwm-titus is a heavily patched build. Below is every addition on top of stock dwm.</p>
+<p>dwm-sky is a heavily patched build. Below is every addition on top of stock dwm.</p>
 <hr>
 <h2 id="window-management-patches"><a class="header" href="#window-management-patches">Window Management Patches</a></h2>
 <h3 id="pertag"><a class="header" href="#pertag">Pertag</a></h3>
@@ -771,7 +771,7 @@ dark_mode       = true
 <hr>
 <h2 id="bar--ewmh"><a class="header" href="#bar--ewmh">Bar &amp; EWMH</a></h2>
 <h3 id="polybar-integration"><a class="header" href="#polybar-integration">Polybar Integration</a></h3>
-<p>The built-in dwm bar is replaced by Polybar. dwm-titus feeds tag and window data to Polybar via EWMH atoms, keeping it fully informed.</p>
+<p>The built-in dwm bar is replaced by Polybar. dwm-sky feeds tag and window data to Polybar via EWMH atoms, keeping it fully informed.</p>
 <p>Multi-monitor support: each monitor gets its own Polybar instance. The primary monitor hosts the system tray and EWMH tag reporting.</p>
 <h3 id="ewmh-compliance"><a class="header" href="#ewmh-compliance">EWMH Compliance</a></h3>
 <p>Implements <code>_NET_WM_STATE</code>, <code>_NET_CURRENT_DESKTOP</code>, <code>_NET_NUMBER_OF_DESKTOPS</code>, and related atoms so external tools and taskbars work correctly.</p>
@@ -859,7 +859,7 @@ terminal = "alacritty"
 <hr>
 <h2 id="themes-not-applying"><a class="header" href="#themes-not-applying">Themes Not Applying</a></h2>
 <ul>
-<li>Confirm <code>themes.toml</code> is at <code>~/.config/dwm-titus/themes.toml</code></li>
+<li>Confirm <code>themes.toml</code> is at <code>~/.config/dwm-sky/themes.toml</code></li>
 <li>Check the <code>[active]</code> section has a valid theme name</li>
 <li>Manually trigger: <code>kill -USR1 $(pidof dwm)</code></li>
 <li>Run <code>theme-apply.sh</code> directly to see any errors</li>
@@ -893,7 +893,7 @@ terminal = "alacritty"
 <hr>
 <h2 id="still-stuck"><a class="header" href="#still-stuck">Still Stuck?</a></h2>
 <ul>
-<li>Open an issue: <a href="https://github.com/ChrisTitusTech/dwm-titus/issues">github.com/ChrisTitusTech/dwm-titus/issues</a></li>
+<li>Open an issue: <a href="https://github.com/ChrisTitusTech/dwm-sky/issues">github.com/ChrisTitusTech/dwm-sky/issues</a></li>
 <li>Run the full check: <code>bash scripts/check-deps.sh</code></li>
 </ul>
 

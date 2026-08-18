@@ -1,6 +1,6 @@
 # Configuration
 
-dwm-titus uses two TOML config files that **live-reload on save** — no recompile needed for most changes.
+dwm-sky uses two TOML config files that **live-reload on save** — no recompile needed for most changes.
 
 | File | Purpose |
 |------|---------|

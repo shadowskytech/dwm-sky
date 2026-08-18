@@ -51,7 +51,7 @@ fc-cache -fv
 
 ## Themes Not Applying
 
-- Confirm `themes.toml` is at `~/.config/dwm-titus/themes.toml`
+- Confirm `themes.toml` is at `~/.config/dwm-sky/themes.toml`
 - Check the `[active]` section has a valid theme name
 - Manually trigger: `kill -USR1 $(pidof dwm)`
 - Run `theme-apply.sh` directly to see any errors
@@ -94,5 +94,5 @@ If artifacts persist, try disabling experimental backends in `~/.config/picom.co
 
 ## Still Stuck?
 
-- Open an issue: [github.com/ChrisTitusTech/dwm-titus/issues](https://github.com/ChrisTitusTech/dwm-titus/issues)
+- Open an issue: [github.com/ChrisTitusTech/dwm-sky/issues](https://github.com/ChrisTitusTech/dwm-sky/issues)
 - Run the full check: `bash scripts/check-deps.sh`

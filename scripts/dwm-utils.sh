@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────
-# dwm-utils.sh — Shared utility library for dwm-titus
+# dwm-utils.sh — Shared utility library for dwm-sky
 # Source this file from other scripts:
 #   source "$(dirname "$0")/dwm-utils.sh"
 # ─────────────────────────────────────────────────────────

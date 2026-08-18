@@ -74,8 +74,8 @@ sudo pacman -S polybar
 #### 2. Clone and Build
 
 ```bash
-git clone https://github.com/ChrisTitusTech/dwm-titus.git
-cd dwm-titus
+git clone https://github.com/ChrisTitusTech/dwm-sky.git
+cd dwm-sky
 cp config.def.h config.h    # Create your personal config
 make
 sudo make install

@@ -1,6 +1,6 @@
 # Patches & Features
 
-dwm-titus is a heavily patched build. Below is every addition on top of stock dwm.
+dwm-sky is a heavily patched build. Below is every addition on top of stock dwm.
 
 ---
 
@@ -48,7 +48,7 @@ Three fullscreen modes available:
 ## Bar & EWMH
 
 ### Polybar Integration
-The built-in dwm bar is replaced by Polybar. dwm-titus feeds tag and window data to Polybar via EWMH atoms, keeping it fully informed.
+The built-in dwm bar is replaced by Polybar. dwm-sky feeds tag and window data to Polybar via EWMH atoms, keeping it fully informed.
 
 Multi-monitor support: each monitor gets its own Polybar instance. The primary monitor hosts the system tray and EWMH tag reporting.
 
