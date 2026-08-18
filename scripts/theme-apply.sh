@@ -9,7 +9,7 @@
 set -euo pipefail
 
 # ── Locate themes.toml ────────────────────────────────────────────────────────
-THEMES_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/dwm-sky/themes.toml"
+THEMES_FILE="$HOME/.config/dwm-sky/themes.toml"
 if [[ ! -f "$THEMES_FILE" ]]; then
     echo "theme-apply: themes.toml not found at $THEMES_FILE" >&2
     exit 1
@@ -118,12 +118,12 @@ EOF
     if [[ -f "$ALACRITTY_DIR/alacritty.toml" ]]; then
         if ! grep -q "active-theme.toml" "$ALACRITTY_DIR/alacritty.toml"; then
             # Insert active-theme.toml as first import entry
-            sed -i 's|^\(import = \[\s*\)|\1\n  "~/.config/alacritty/active-theme.toml",|' \
+            sed --follow-symlinks -i 's|^\(import = \[\s*\)|\1\n  "~/.config/alacritty/active-theme.toml",|' \
                 "$ALACRITTY_DIR/alacritty.toml"
         fi
         # Replace any existing theme import line to point to active-theme.toml
         # (removes old theme-specific imports, keeps keybinds import)
-        sed -i 's|"~/.config/alacritty/[^k][^"]*\.toml"|"~/.config/alacritty/active-theme.toml"|g' \
+        sed --follow-symlinks -i 's|"~/.config/alacritty/[^k][^"]*\.toml"|"~/.config/alacritty/active-theme.toml"|g' \
             "$ALACRITTY_DIR/alacritty.toml"
     fi
 fi
@@ -203,7 +203,7 @@ fi
 ROFI_CFG="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/config.rasi"
 if [[ -n "$ROFI_THEME" && -f "$ROFI_CFG" ]]; then
     if grep -q '@theme' "$ROFI_CFG"; then
-        sed -i "s|@theme \".*\"|@theme \"themes/$ROFI_THEME.rasi\"|g" "$ROFI_CFG"
+        sed --follow-symlinks -i "s|@theme \".*\"|@theme \"themes/$ROFI_THEME.rasi\"|g" "$ROFI_CFG"
     else
         echo "@theme \"themes/$ROFI_THEME.rasi\"" >> "$ROFI_CFG"
     fi

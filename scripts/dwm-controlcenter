@@ -19,7 +19,7 @@ fi
 
 THEME_FILE="${THEME_DIR:+$THEME_DIR/controlcenter.rasi}"
 
-DWM_TITUS_DIR="$HOME/.local/share/dwm-sky"
+DWM_SKY_DIR="$HOME/.local/share/dwm-sky"
 POLYBAR_DIR="$HOME/.config/polybar"
 ROFI_DIR="$HOME/.config/rofi"
 BG_DIR="$HOME/Pictures/backgrounds"
@@ -229,8 +229,8 @@ run_health_check() {
             action=$(printf '%s\n' "Run install.sh (auto-fix)" "Run check-deps.sh (details)" \
                 | rofi_menu "  Fix" "Selected: $chosen") || continue
             case "$action" in
-                "Run install.sh"*)  spawn_terminal bash -c "cd '$DWM_TITUS_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash install.sh; echo 'Press Enter to close'; read" ;;
-                "Run check-deps"*)  spawn_terminal bash -c "cd '$DWM_TITUS_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash scripts/check-deps.sh; echo 'Press Enter to close'; read" ;;
+                "Run install.sh"*)  spawn_terminal bash -c "cd '$DWM_SKY_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash install.sh; echo 'Press Enter to close'; read" ;;
+                "Run check-deps"*)  spawn_terminal bash -c "cd '$DWM_SKY_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash scripts/check-deps.sh; echo 'Press Enter to close'; read" ;;
             esac
         fi
     done
@@ -297,10 +297,10 @@ run_quick_actions() {
             spawn_terminal bash -c "sudo systemctl restart NetworkManager && echo 'NetworkManager restarted'; sleep 2"
             ;;
         *"Run Dependency Check"*)
-            spawn_terminal bash -c "cd '$DWM_TITUS_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash scripts/check-deps.sh; echo; echo 'Press Enter to close'; read"
+            spawn_terminal bash -c "cd '$DWM_SKY_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash scripts/check-deps.sh; echo; echo 'Press Enter to close'; read"
             ;;
         *"Install Missing Deps"*)
-            spawn_terminal bash -c "cd '$DWM_TITUS_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash install.sh; echo; echo 'Press Enter to close'; read"
+            spawn_terminal bash -c "cd '$DWM_SKY_DIR' 2>/dev/null || cd '$(dirname "$0")/..'; bash install.sh; echo; echo 'Press Enter to close'; read"
             ;;
     esac
     done
@@ -311,8 +311,7 @@ run_quick_actions() {
 # ═════════════════════════════════════════════════════════
 
 run_theme_select() {
-    local themes_file="$HOME/.local/share/dwm-sky/config/themes.toml"
-    [ ! -f "$themes_file" ] && themes_file="$HOME/.config/dwm-sky/themes.toml"
+    local themes_file="$HOME/.config/dwm-sky/themes.toml"
 
     if [ ! -f "$themes_file" ]; then
         notify "themes.toml not found" --urgency=critical
@@ -355,12 +354,35 @@ run_theme_select() {
 
     [ "$selected" = "$current" ] && return
 
-    # Update theme = "..." under [active] in place
-    awk -v new="$selected" '
+    # Update the canonical file in place so a Stow symlink remains intact.
+    local themes_tmp
+    themes_tmp=$(mktemp "${themes_file}.tmp.XXXXXX")
+    if ! awk -v new="$selected" '
         /^\[active\]/{found=1}
         found && /^theme[[:space:]]*=/{sub(/"[^"]*"/, "\"" new "\""); found=0}
         {print}
-    ' "$themes_file" > "${themes_file}.tmp" && mv "${themes_file}.tmp" "$themes_file"
+    ' "$themes_file" > "$themes_tmp"; then
+        rm -f "$themes_tmp"
+        notify "Could not update themes.toml" --urgency=critical
+        return
+    fi
+    if ! cat "$themes_tmp" > "$themes_file"; then
+        rm -f "$themes_tmp"
+        notify "Could not update themes.toml" --urgency=critical
+        return
+    fi
+    rm -f "$themes_tmp"
+
+    # Closing the canonical file triggers DWM's existing inotify reload path,
+    # which applies DWM/Polybar/Rofi/terminal behavior.
+
+    # Apply only the optional GTK/Qt integration; this does not replace
+    # theme-apply.sh and does not touch cursor or icon settings.
+    local appearance_apply="$HOME/.local/share/dwm-sky/scripts/global-appearance-apply.sh"
+    if [ -x "$appearance_apply" ]; then
+        "$appearance_apply" >/dev/null 2>&1 || \
+            notify "Theme applied; GTK/Qt integration reported an issue"
+    fi
 
     notify "Theme: $selected" "Applying…"
 }

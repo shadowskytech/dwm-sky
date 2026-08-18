@@ -86,6 +86,7 @@ term_color15    = "#ECEFF4"
 ghostty_theme   = "Nord"
 rofi_theme      = "sidetab-nord"
 dark_mode       = true
+gtk_theme       = "Nordic"
 
 polybar_bg      = "#2e3440"
 polybar_fg      = "#d8dee9"

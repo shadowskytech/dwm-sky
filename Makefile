@@ -81,8 +81,8 @@ uninstall:
 
 release: dwm
 	mkdir -p release
-	cp -f dwm dwm.desktop .xinitrc release/
+	cp -f dwm dwm.desktop release/
 	cp -rf config scripts release/
-	tar -czf release/Omitus-${VERSION}.tar.gz -C release dwm dwm.desktop .xinitrc config scripts
+	tar -czf release/dwm-sky-${VERSION}.tar.gz -C release dwm dwm.desktop config scripts
 
 .PHONY: all clean install uninstall release
