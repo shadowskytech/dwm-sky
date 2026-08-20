@@ -110,7 +110,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
+	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow, iscentered;
 	int issteam;
 	int beingmoved;
 	int fakefullscreen;
@@ -170,6 +170,7 @@ typedef struct {
 	int isterminal;
 	int noswallow;
 	int monitor;
+	int iscentered;
 } Rule;
 
 /* function declarations */
@@ -432,6 +433,7 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->isfloating = 0;
+	c->iscentered = 1;
 	c->tags = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
@@ -451,6 +453,7 @@ applyrules(Client *c)
 			c->isterminal = r->isterminal;
 			c->noswallow  = r->noswallow;
 			c->isfloating = r->isfloating;
+			c->iscentered = r->iscentered;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1568,8 +1571,10 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
-	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
-	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+	if (c->iscentered) {
+		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+		c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+	}
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
 	if (!c->isfloating)
@@ -3101,6 +3106,8 @@ load_rules_toml(const char *user_path, const char *default_path)
 		const TomlValue *vterm = toml_table_get(&doc, "rules", i, "isterminal");
 		const TomlValue *vno   = toml_table_get(&doc, "rules", i, "noswallow");
 		const TomlValue *vmon  = toml_table_get(&doc, "rules", i, "monitor");
+		const TomlValue *vcnt  = toml_table_get(&doc, "rules", i, "iscentered");
+		if (!vcnt) vcnt        = toml_table_get(&doc, "rules", i, "center");
 		Rule *r = &rt_rules_buf[nk];
 		if (vc && vc->type == TOML_STRING && vc->s[0]) {
 			strncpy(rt_rules_strbuf[nk*3+0], vc->s, TOML_MAX_STR-1);
@@ -3129,6 +3136,7 @@ load_rules_toml(const char *user_path, const char *default_path)
 		r->isterminal = (vterm && vterm->type == TOML_INT) ? (int)vterm->i         : 0;
 		r->noswallow  = (vno   && vno->type   == TOML_INT) ? (int)vno->i           : 0;
 		r->monitor    = (vmon  && vmon->type  == TOML_INT) ? (int)vmon->i          : -1;
+		r->iscentered = (vcnt  && vcnt->type  == TOML_INT) ? (int)vcnt->i          : 1;
 		nk++;
 	}
 	rt_rules  = rt_rules_buf;

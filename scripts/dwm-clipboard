@@ -1,0 +1,32 @@
+#!/bin/bash
+# ─────────────────────────────────────────────────────────
+# dwm-clipboard — CopyQ toggle & right-edge placement
+# ─────────────────────────────────────────────────────────
+
+if ! pgrep -x copyq >/dev/null; then
+    copyq --start-server &
+    sleep 0.2
+fi
+
+# If already visible, hide it
+if copyq visible 2>/dev/null | grep -q "true"; then
+    copyq hide
+    exit 0
+fi
+
+# Show CopyQ
+copyq show
+
+# Immediately target the main window and position on the right edge
+for id in $(xdotool search --class "copyq"); do
+    w=$(xwininfo -id "$id" 2>/dev/null | awk '/Width:/ {print $2}')
+    if [ "${w:-0}" -gt 200 ]; then
+        read -r sw sh < <(xdotool getdisplaygeometry 2>/dev/null || echo "1920 1080")
+        W=480
+        H=$((sh - 60))
+        X=$((sw - W - 12))
+        Y=40
+        xdotool windowsize "$id" "$W" "$H" windowmove "$id" "$X" "$Y" windowfocus "$id" 2>/dev/null
+        break
+    fi
+done

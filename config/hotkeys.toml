@@ -68,13 +68,19 @@ keys = [
   # ── Web apps ─────────────────────────────────────────────────────────────────
   { mod="SUPER",            key="a",       desc="ChatGPT",                 func="spawn",       exec=["$webapp", "https://chatgpt.com"] },
   { mod="SUPER SHIFT",      key="a",       desc="Gemini",                  func="spawn",       exec=["$webapp", "https://gemini.google.com/"] },
-  #{ mod="SUPER SHIFT",      key="x",       desc="X/Twitter — new post",    func="spawn",       exec=["$webapp", "https://x.com/compose/post"] },
-  { mod="SUPER",            key="b",       desc="Browser",                 func="spawn",       cmd="xdg-open https://" },
+  { mod="SUPER SHIFT",      key="x",       desc="X/Twitter — new post",    func="spawn",       exec=["$webapp", "https://x.com/compose/post"] },
+  { mod="SUPER",            key="b",       desc="Browser",                 func="spawn",       exec=["dwm-default-apps", "open", "https://"] },
+  { mod="SUPER CTRL",       key="a",       desc="claude",                 func="spawn",        exec=["$webapp", "https://claude.ai"] },
 
+  { mod="SUPER SHIFT",      key="m",       desc="Yt music",                  func="spawn",       exec=["$webapp", "https://music.youtube.com/"] },
+  { mod="SUPER SHIFT",      key="y",       desc="Youtube",                  func="spawn",       exec=["$webapp", "https://youtube.com/"] },
   # ── Screenshots ───────────────────────────────────────────────────────────────
   { mod="SUPER",            key="p",       desc="Screenshot (fullscreen)", func="spawn",       cmd="dwm-screenshot full" },
   { mod="SUPER SHIFT",      key="p",       desc="Screenshot area → file",  func="spawn",       cmd="dwm-screenshot gui" },
   { mod="SUPER CTRL",       key="p",       desc="Screenshot area → clip",  func="spawn",       cmd="dwm-screenshot clip" },
+
+  # ── Clipboard ─────────────────────────────────────────────────────────────────
+  { mod="SUPER",            key="v",       desc="Clipboard history",       func="spawn",       cmd="dwm-clipboard toggle" },
 
   # ── Files & utilities ─────────────────────────────────────────────────────────
   { mod="SUPER",            key="e",       desc="File manager",            func="spawn",       cmd="xdg-open ." },
@@ -88,11 +94,11 @@ keys = [
   { mod="SUPER CTRL",                 key="Down",   desc="Volume down",   func="spawn",  cmd="amixer sset Master 5%- unmute" },
   { mod="SUPER CTRL",                 key="m",          desc="Mute toggle",   func="spawn",  cmd="amixer sset Master toggle" },
   
-  # media keys
-  { mod="SUPER CTRL",                 key="space",   desc="play/pause",     func="spawn",  cmd="playerctl play-pause" },
-  { mod="SUPER CTRL",                 key="l",   desc="next",     func="spawn",  cmd="playerctl next" },
-  { mod="SUPER CTRL",                 key="h",   desc="prev",     func="spawn",  cmd="playerctl previous" },
-
+   # media keys
+  { mod="SUPER CTRL",                 key="x",   desc="play/pause",func="spawn",  cmd="playerctl play-pause" },
+  { mod="SUPER CTRL",                 key="c",   desc="next",     func="spawn",  cmd="playerctl next" },
+  { mod="SUPER CTRL",                 key="z",   desc="prev",     func="spawn",  cmd="playerctl previous" },
+  
   # precise Volume Control
   { mod="CTRL ALT",                 key="Up",   desc="Volume up",     func="spawn",  cmd="amixer sset Master 1%+ unmute" },
   { mod="CTRL ALT",                 key="Down",   desc="Volume down",   func="spawn",  cmd="amixer sset Master 1%- unmute" },
@@ -127,7 +133,7 @@ keys = [
   { mod="SUPER",            key="t",       desc="Tile layout",             func="setlayout",   layout_idx=0 },
   #{ mod="SUPER",            key="f",      desc="Float layout",            func="setlayout",   layout_idx=1 },
   { mod="SUPER",            key="f",       desc="Fullscreen",              func="fullscreen" },
-  { mod="SUPER SHIFT",      key="f",       desc="Toggle floating window",  func="togglefloating" },
+ # { mod="SUPER SHIFT",      key="f",       desc="Toggle floating window",  func="togglefloating" },
   { mod="SUPER",            key="space",   desc="Toggle float/tile",       func="togglefloating" },
   #{ mod="SUPER SHIFT",      key="y",      desc="Fake fullscreen",         func="togglefakefullscreen" },
   { mod="SUPER SHIFT",      key="b",       desc="Toggle bar",              func="togglebar" },
@@ -144,13 +150,21 @@ keys = [
   { mod="SUPER CTRL",       key="q",       desc="Power menu",              func="spawn",       cmd="$HOME/.config/rofi/powermenu.sh" },
   { mod="SUPER CTRL SHIFT", key="r",       desc="Reboot",                  func="spawn",       cmd="systemctl reboot" },
   { mod="SUPER CTRL SHIFT", key="s",       desc="Suspend",                 func="spawn",       cmd="systemctl suspend" },
-  { mod="SUPER"           , key="l",       desc="slock",                   func="spawn",       cmd="slock" },
+  { mod="SUPER CTRL SHIFT"           , key="l",       desc="slock",                   func="spawn",       cmd="slock" },
 
   # Pomodoro (bindings must live inside keys = [ ... ] — see file header)
-  { mod="SUPER SHIFT",     key="F8",      desc="Pomodoro start/stop",     func="spawn",       cmd="pomodoro toggle" },
-  { mod="SUPER CTRL",      key="F8",      desc="Pomodoro pause",          func="spawn",       cmd="pomodoro pause" },
-  { mod="SUPER SHIFT",     key="F9",      desc="Pomodoro resume",         func="spawn",       cmd="pomodoro resume" },
+  { mod="SUPER",     key="F8",      desc="Pomodoro start/stop",     func="spawn",       cmd="pomodoro toggle" },
+  { mod="SUPER",     key="F9",      desc="Pomodoro pause/resume",   func="spawn",       cmd="pomodoro toggle-pause" },
+  
+  # compositor toggle
+  {mod="SUPER",      key="F5",      desc="Toggle compositor",       func="spawn",       cmd="toggle-compositor"},
 
+# additional apps/softwares/shortcuts
+  { mod="SUPER SHIFT",  key="f",  desc="Firefox",   func="spawn",  exec=["firefox"] },
+  { mod="SUPER SHIFT",  key="c",  desc="VS Codium", func="spawn",  exec=["codium"] },
+  { mod="SUPER",        key="c",  desc="VS Code",   func="spawn",  exec=["code"] },
+  { mod="SUPER SHIFT",  key="s",  desc="Screenshot",func="spawn",  cmd="scrot -s ~/Pictures/screenshot.png" },
+  { mod="SUPER",        key="o", desc="Obsidian",    func="spawn", cmd="obsidian &" },
 ]
 
 # ── TAG BINDINGS ──────────────────────────────────────────────────────────────
@@ -174,14 +188,10 @@ tag_keys = [
   { key="9", tag=8 },
 ]
 
+
 # ── CUSTOM SHORTCUTS ──────────────────────────────────────────────────────────
 # Add your own below.  Uncomment, fill in the fields, and save.
 #
-# { mod="SUPER SHIFT",  key="f",  desc="Firefox",   func="spawn",  exec=["firefox"] },
-#{ mod="SUPER SHIFT",  key="c",  desc="VS Codium",   func="spawn",  exec=["Codium"] },
-#{ mod="SUPER",  key="c",  desc="VS Code",   func="spawn",  exec=["Code"] },
-# { mod="SUPER SHIFT",  key="d",  desc="Discord",   func="spawn",  exec=["discord"] },
-# { mod="SUPER SHIFT",  key="s",  desc="Screenshot",func="spawn",  cmd="scrot -s ~/Pictures/screenshot.png" },
 
 # ── MOUSE BUTTON BINDINGS ─────────────────────────────────────────────────────
 #

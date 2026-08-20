@@ -32,6 +32,8 @@ rules = [
   { title="Event Tester",   noswallow=1  },
 
   # ── floating ─────────────────────────────────────────────────────────────
+  { class="copyq",          isfloating=1, iscentered=0 },
+  { class="Copyq",          isfloating=1, iscentered=0 },
   # { class="Gimp",           isfloating=1 },
   # { class="pavucontrol",    isfloating=1 },
 

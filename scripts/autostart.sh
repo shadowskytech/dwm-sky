@@ -59,6 +59,9 @@ nm-applet --sm-disable 2>/dev/null &
 # Launch Polybar
 "$HOME/.config/polybar/launch.sh" 2>/dev/null &
 
+# Clipboard daemon
+pgrep -x copyq >/dev/null || copyq --start-server &
+
 # Session locker (xss-lock hooks X11 screensaver and systemd sleep to slock)
 pgrep -x xss-lock >/dev/null || xss-lock -- slock &
 
